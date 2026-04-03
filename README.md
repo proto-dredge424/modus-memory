@@ -71,12 +71,12 @@ Memory isn't just about remembering. It's a token reduction strategy.
 ### Homebrew (macOS & Linux)
 
 ```bash
-brew install modusai/tap/modus-memory
+brew install GetModus/tap/modus-memory
 ```
 
 ### Download binary
 
-Grab the latest release for your platform from [Releases](https://github.com/modusai/modus-memory/releases):
+Grab the latest release for your platform from [Releases](https://github.com/GetModus/modus-memory/releases):
 
 | Platform | Architecture | Download |
 |----------|-------------|----------|
@@ -98,7 +98,7 @@ modus-memory version
 ### Go install
 
 ```bash
-go install github.com/modusai/modus-memory@latest
+go install github.com/GetModus/modus-memory@latest
 ```
 
 ## Quickstart
@@ -323,12 +323,12 @@ Benchmarked on Apple Silicon (M1+) with 16,000+ documents:
 ## Building from Source
 
 ```bash
-git clone https://github.com/modusai/modus-memory.git
+git clone https://github.com/GetModus/modus-memory.git
 cd modus-memory
-go build -ldflags="-s -w" -o modus-memory .
+go build -ldflags="-s -w" -o modus-memory ./cmd/modus-memory/
 
 # Cross-compile
-CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o modus-memory-linux .
+CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o modus-memory-linux ./cmd/modus-memory/
 ```
 
 ## License
