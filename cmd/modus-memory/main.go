@@ -10,6 +10,7 @@
 //	modus-memory --vault ~/notes    — use custom vault directory
 //	modus-memory version            — print version
 //	modus-memory health             — check vault health
+//	modus-memory doctor              — diagnose vault problems (post-import validation)
 //	modus-memory import khoj <file> — import from Khoj export (ZIP or JSON)
 package main
 
@@ -24,7 +25,7 @@ import (
 	"github.com/GetModus/modus-memory/internal/vault"
 )
 
-const version = "0.2.0"
+const version = "0.3.0"
 
 func main() {
 	// Parse flags
@@ -44,6 +45,10 @@ func main() {
 		case "health":
 			vd := resolveVaultDir(vaultDir)
 			runHealth(vd)
+			os.Exit(0)
+		case "doctor":
+			vd := resolveVaultDir(vaultDir)
+			runDoctor(vd)
 			os.Exit(0)
 		case "import":
 			vd := resolveVaultDir(vaultDir)

@@ -276,9 +276,18 @@ modus-memory import khoj conversations.json
 This converts:
 - Each conversation into a searchable document in `brain/khoj/`
 - Context references into memory facts in `memory/facts/`
+- Entities extracted from titles and user messages into `atlas/entities/`
 - Intent types into tags for filtering
 
 The import is idempotent — safe to run multiple times.
+
+After importing, run `modus-memory doctor` to validate your vault:
+
+```bash
+modus-memory doctor --vault ~/modus/vault
+```
+
+This checks for missing fields, duplicate facts, contradictions, and shows your vault's document distribution.
 
 ### Exporting from Khoj
 
