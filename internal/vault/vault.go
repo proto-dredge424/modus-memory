@@ -28,16 +28,40 @@ func (v *Vault) Path(parts ...string) string {
 	return filepath.Join(args...)
 }
 
+// safePath resolves relPath within the vault and rejects traversal attempts.
+func (v *Vault) safePath(relPath string) (string, error) {
+	abs := filepath.Join(v.Dir, relPath)
+	abs, err := filepath.Abs(abs)
+	if err != nil {
+		return "", fmt.Errorf("invalid path: %w", err)
+	}
+	root, err := filepath.Abs(v.Dir)
+	if err != nil {
+		return "", fmt.Errorf("invalid vault root: %w", err)
+	}
+	if !strings.HasPrefix(abs, root+string(os.PathSeparator)) && abs != root {
+		return "", fmt.Errorf("path traversal denied: %s", relPath)
+	}
+	return abs, nil
+}
+
 // Read parses a single markdown file by relative path.
 func (v *Vault) Read(relPath string) (*markdown.Document, error) {
-	return markdown.Parse(filepath.Join(v.Dir, relPath))
+	abs, err := v.safePath(relPath)
+	if err != nil {
+		return nil, err
+	}
+	return markdown.Parse(abs)
 }
 
 // Write creates or overwrites a markdown file with frontmatter + body.
 func (v *Vault) Write(relPath string, fm map[string]interface{}, body string) error {
-	path := filepath.Join(v.Dir, relPath)
-	os.MkdirAll(filepath.Dir(path), 0755)
-	return markdown.Write(path, fm, body)
+	abs, err := v.safePath(relPath)
+	if err != nil {
+		return err
+	}
+	os.MkdirAll(filepath.Dir(abs), 0755)
+	return markdown.Write(abs, fm, body)
 }
 
 // Filter constrains List results by frontmatter field.
@@ -49,7 +73,11 @@ type Filter struct {
 
 // List scans a subdirectory for .md files, optionally filtered.
 func (v *Vault) List(subdir string, filters ...Filter) ([]*markdown.Document, error) {
-	dir := filepath.Join(v.Dir, subdir)
+	abs, err := v.safePath(subdir)
+	if err != nil {
+		return nil, err
+	}
+	dir := abs
 	docs, err := markdown.ScanDir(dir)
 	if err != nil {
 		return nil, err
