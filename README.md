@@ -368,7 +368,7 @@ modus-memory --vault ~/vault
 
 ### 2. Start remembering
 
-Your AI client now has 11 memory tools. Ask it to:
+Your AI client now has a full sovereign memory surface. Ask it to:
 
 ```
 "Remember that I prefer TypeScript over JavaScript for new projects"
@@ -388,40 +388,26 @@ modus-memory health
 # Cross-refs: 156 subjects, 89 tags, 23 entities
 ```
 
-## Pricing
+## Availability
 
-| | Free | Pro ($10/mo) |
-|---|---|---|
-| Documents | Up to 1,000 | Unlimited |
-| Core MCP tools | 22 | 22 |
-| Route-aware retrieval | Yes | Yes |
-| Episode store + recall receipts | Yes | Yes |
-| Governance review flows | Yes | Yes |
-| Secure-state, readiness, trials, portability | Yes | Yes |
-| Khoj import | Yes | Yes |
-| Connected graph query (`vault_connected`) | — | Yes |
-| FSRS reinforcement + decay | — | Yes |
-| Tuning + training surfaces | — | Yes |
+Homing by MODUS is now **free for everyone**.
 
-```bash
-# Buy Pro
-# → https://modus-memory.lemonsqueezy.com
+There is no paid tier in the current product posture. The full standalone runtime is available locally, including:
 
-# Activate
-modus-memory activate <license-key>
+- route-aware retrieval
+- episodes and recall receipts
+- governed review flows
+- secure-state verification
+- portability audit
+- readiness reporting
+- synthetic evaluation and live trials
+- reinforcement, decay, tuning, training, and connected graph queries
 
-# Check status
-modus-memory status
-
-# Refresh (re-validates with server)
-modus-memory refresh
-```
-
-Free is the full Homing core for local-first use. Pro removes the document ceiling and unlocks the higher-touch optimization and graph surfaces: explicit reinforcement, decay sweeps, tuning, training, and connected graph queries.
+The compatibility commands `modus-memory activate`, `refresh`, `deactivate`, and `status` remain in the binary, but they now simply report that no license is required.
 
 ## Tools
 
-The standalone `modus-memory` server now exposes **27 MCP tools** in total: **22 core tools** and **5 Pro extensions**.
+The standalone `modus-memory` server now exposes **27 MCP tools**, all available to every user.
 
 ### Core Retrieval And Storage
 
@@ -457,13 +443,24 @@ The standalone `modus-memory` server now exposes **27 MCP tools** in total: **22
 - `memory_portability_queue`
 - `memory_portability_archive`
 
-### Pro Extensions
+### Additional Advanced Tools
 
 - `memory_reinforce`
 - `memory_decay_facts`
 - `memory_tune`
 - `memory_train`
 - `vault_connected`
+
+## Roadmap
+
+Near-term work we expect to pursue next:
+
+- a short demo GIF or video showing the remember / recall / attach flow in practice
+- clearer end-to-end examples for shell attachment in real agent harnesses
+- optional hybrid semantic retrieval using local embeddings alongside BM25
+- deeper portability and migration tooling for users leaving provider-owned memory
+
+The design discipline stays the same: local-first, inspectable, plain-file storage, and no unnecessary infrastructure burden.
 
 ## The Librarian Pattern
 

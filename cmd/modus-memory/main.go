@@ -22,9 +22,9 @@
 //	modus-memory carrier-audit [--json] — inspect local carrier and wrapper readiness without live execution
 //	modus-memory carrier-probe --carriers <codex,qwen,...> [--prompt "..."] [--json] — run live sovereign attachment probes against selected carriers
 //	modus-memory import khoj <file> — import from Khoj export (ZIP or JSON)
-//	modus-memory activate <key>    — activate Pro license
-//	modus-memory refresh           — re-validate Pro license
-//	modus-memory deactivate        — remove Pro license
+//	modus-memory activate          — compatibility no-op; Homing is free for everyone
+//	modus-memory refresh           — compatibility no-op; Homing is free for everyone
+//	modus-memory deactivate        — compatibility no-op; Homing is free for everyone
 package main
 
 import (
@@ -135,11 +135,12 @@ func main() {
 			runImport(vd, args[i+1:])
 			os.Exit(0)
 		case "activate":
-			if i+1 >= len(args) {
-				fmt.Fprintln(os.Stderr, "Usage: modus-memory activate <license-key>")
-				os.Exit(1)
+			key := ""
+			if i+1 < len(args) && !strings.HasPrefix(args[i+1], "-") {
+				key = args[i+1]
+				i++
 			}
-			if err := activateLicense(args[i+1]); err != nil {
+			if err := activateLicense(key); err != nil {
 				fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 				os.Exit(1)
 			}
@@ -158,20 +159,9 @@ func main() {
 			os.Exit(0)
 		case "status":
 			lic := loadLicense()
-			if lic.valid {
-				fmt.Printf("Tier: %s\n", lic.tier)
-				if lic.state != nil {
-					fmt.Printf("Email: %s\n", lic.state.Email)
-					if lic.state.ExpiresAt != "" {
-						fmt.Printf("Renews: %s\n", lic.state.ExpiresAt)
-					}
-					fmt.Printf("Validated: %s\n", lic.state.ValidatedAt)
-				}
-			} else {
-				fmt.Printf("Tier: free\n")
-				fmt.Printf("Reason: %s\n", lic.reason)
-				fmt.Printf("\nUpgrade: https://modus-memory.lemonsqueezy.com\n")
-			}
+			fmt.Printf("Availability: free for everyone\n")
+			fmt.Printf("Features: all enabled\n")
+			fmt.Printf("Status: %s\n", lic.reason)
 			os.Exit(0)
 		}
 	}
@@ -193,20 +183,14 @@ func main() {
 	log.SetOutput(os.Stderr)
 	log.SetPrefix("[modus-memory] ")
 
-	// Check license
-	lic := loadLicense()
-	isPro := lic.valid && lic.tier == TierPro
+	// Homing is open to all users. Keep the compatibility layer but enable the
+	// full tool surface unconditionally.
+	isPro := true
 
 	// Build search index
 	idx, err := index.Build(vaultDir, "")
 	if err != nil {
 		log.Printf("Warning: index build failed: %v (starting with empty index)", err)
-	}
-
-	// Enforce free tier doc limit
-	if !isPro && idx != nil && idx.DocCount() > FreeDocLimit {
-		log.Printf("Free tier: %d documents exceeds %d limit. Upgrade to Pro for unlimited.", idx.DocCount(), FreeDocLimit)
-		log.Printf("Upgrade at: https://modus.ai/memory")
 	}
 
 	// Create vault
@@ -228,11 +212,7 @@ func main() {
 	srv := mcpsrv.NewServer("modus-memory", version)
 	mcpsrv.RegisterMemoryTools(srv, v, isPro)
 
-	tier := "free"
-	if isPro {
-		tier = "pro"
-	}
-	log.Printf("modus-memory %s [%s] — vault: %s, %d docs indexed, backend: %s", version, tier, vaultDir, idx.DocCount(), librarian.BackendIdentity())
+	log.Printf("modus-memory %s [open] — vault: %s, %d docs indexed, backend: %s", version, vaultDir, idx.DocCount(), librarian.BackendIdentity())
 
 	// Run MCP stdio loop
 	srv.Run()

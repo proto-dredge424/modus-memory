@@ -85,18 +85,9 @@ The memory subsystem now includes:
 
 The standalone `modus-memory` server now exposes:
 
-- 22 core MCP tools
-- 5 Pro extensions
+- 27 MCP tools available to every user
 
-Core tools cover vault access, memory search and store, episodic store, traces, governance proposals, maintenance, secure state, readiness, evaluation, trials, and portability.
-
-Pro extensions currently cover:
-
-- `memory_reinforce`
-- `memory_decay_facts`
-- `memory_tune`
-- `memory_train`
-- `vault_connected`
+The surface includes vault access, memory search and store, episodic store, traces, governance proposals, maintenance, secure state, readiness, evaluation, trials, portability, reinforcement, decay, tuning, training, and connected graph queries.
 
 ## Naming And Compatibility
 
@@ -107,6 +98,7 @@ Compatibility remains intentionally conservative:
 - command name stays `modus-memory`
 - module path stays `github.com/GetModus/modus-memory`
 - existing MCP integrations still target `modus-memory --vault ...`
+- no license activation is required
 
 ## Documentation Updated In This Release
 
