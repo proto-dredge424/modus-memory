@@ -20,7 +20,7 @@ This release turns `modus-memory` from a lightweight local memory server into a 
 
 - Product branding now presents the system as **Homing by MODUS**
 - README and product docs now describe the runtime as a sovereign memory kernel rather than only an MCP memory server
-- The standalone MCP surface now includes 22 core tools and 5 Pro extensions
+- The standalone MCP surface now includes 27 tools available to every user
 - Binary version advanced from the pre-Homing line to `0.5.0`
 
 ### Compatibility
