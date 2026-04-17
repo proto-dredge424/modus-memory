@@ -42,6 +42,17 @@ Not a chat-history graveyard. Not a black-box memory tax. Homing keeps agent con
 
 For the release walkthrough, start with [`docs/reference/release-notes-v0.6.0-homing.md`](../../docs/reference/release-notes-v0.6.0-homing.md). For the implementation deep dive, see [`docs/reference/homing-memory-update-2026-04.md`](../../docs/reference/homing-memory-update-2026-04.md).
 
+## At A Glance
+
+Homing is for teams and operators who want:
+
+- local-first agent memory instead of provider-owned continuity
+- one binary and plain markdown files instead of a stack of infrastructure
+- memory that can be routed, inspected, reviewed, and backed up
+- a setup that works for both true MCP clients and plain shells
+
+If what you need is a hosted chat history product, this is the wrong tool. If what you need is a sovereign memory layer for serious agent work, this is the right category.
+
 ## Demo
 
 This is the core loop in practice: remember a decision, recall it through the right route later, and attach the result to a plain carrier that has no native memory tools of its own.
@@ -49,6 +60,18 @@ This is the core loop in practice: remember a decision, recall it through the ri
 <p align="center">
   <img src="assets/demo.gif" alt="Homing demo showing remember, recall, and attach flow" width="820"/>
 </p>
+
+## What Changed In v0.6.0
+
+This release is not a cosmetic rename. It closes the gap between the public product story and the shipped runtime:
+
+- `homing` is now the primary binary
+- `modus-memory` remains available as a compatibility alias
+- `memory_capture` gives MCP clients one policy-driven write path instead of requiring ad hoc store logic
+- the standalone default vault path is now `~/vault`
+- release artifacts are now published under the `homing-*` names
+
+That means the command surface, the docs, and the downloadable binaries now tell the same story.
 
 ## Why The Name Changed
 
@@ -122,6 +145,16 @@ modus-memory version
 ### Release artifacts
 
 Release binaries live under [Releases](https://github.com/GetModus/modus-memory/releases). For this line, prefer `homing-*` artifacts when they are published. The compatibility alias remains buildable from source either way.
+
+### Fastest start
+
+If you want the shortest path to a working setup:
+
+1. install `homing`
+2. point your MCP-capable client at `homing --vault ~/vault`
+3. add an explicit `memory_capture` rule so memory admission is deliberate
+
+If your client is just a shell, skip MCP entirely and use `homing attach --carrier ...` instead.
 
 ## Attach To Shells, Harnesses, And Agents
 
